@@ -1,0 +1,47 @@
+#include <SoftwareSerial.h> // Library for software serial communication
+
+// Define constants for sensor pins
+const int mq5Pin = A0;
+const int mq135Pin = A1;
+const int buzzerPin = 8;  // Pin for the buzzer
+
+// Define software serial pins for Bluetooth communication
+SoftwareSerial bluetooth(2, 3); // RX (2), TX (3)
+
+int mq5Threshold = 5000;
+int mq135Threshold = 4000;
+
+void setup() {
+  Serial.begin(9600);  // Initialize Serial for debugging
+  bluetooth.begin(9600);
+  pinMode(mq5Pin, INPUT);
+  pinMode(mq135Pin, INPUT);
+  pinMode(buzzerPin, OUTPUT);  // Set buzzer pin as output
+}
+
+void loop() {
+  // Read sensor values
+  int mq5Val = analogRead(mq5Pin);
+  int mq135Val = analogRead(mq135Pin);
+
+  // Check for spoilage and activate buzzer if necessary
+  if (mq5Val > mq5Threshold || mq135Val > mq135Threshold) {
+    // Trigger buzzer for alert
+    digitalWrite(buzzerPin, HIGH);
+    tone(buzzerPin, 1000);  // Play 1 kHz tone (adjust for desired frequency)
+    delay(1000);  // Buzz for 1 second (adjust duration as needed)
+    digitalWrite(buzzerPin, LOW);  // Stop buzzer
+    noTone(buzzerPin);  // Ensure buzzer is completely off
+
+    // Send spoilage notification to Python
+    bluetooth.println("Spoilage alert!");
+  }
+
+  // Transmit sensor readings and labels via Bluetooth (and to Serial Monitor)
+  Serial.print("MQ-5 (raw): ");  // Print to Serial Monitor
+  Serial.println(mq5Val);         // Print to Serial Monitor
+  Serial.print("MQ-135 (raw): "); // Print to Serial Monitor
+  Serial.println(mq135Val);       // Print to Serial Monitor
+
+  delay(5000);  // Check sensors every 5 seconds (adjust as needed)
+}
