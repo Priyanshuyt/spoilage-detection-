@@ -16,4 +16,4 @@ Mq135 sensor: The MQ-135 sensor is specifically designed to detect a wide range 
 ARDUINO NANO: The Arduino board serves as the central processing unit for  project. It collects data from the gas sensors, processes it based on pre-defined thresholds, and triggers alerts or controls other functionalities.
 
 YOutube video link
-https://youtu.be/KJt3wJ6VDDE
+https://youtu.be/Bs3hvUu118E
