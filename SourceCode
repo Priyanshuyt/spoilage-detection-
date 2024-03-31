@@ -12,11 +12,11 @@ int mq5Threshold = 500;
 int mq135Threshold = 400;
 
 void setup() {
-  Serial.begin(9600);  // Initialize Serial for debugging
+  Serial.begin(9600);  // Initialize Serial 
   bluetooth.begin(9600);
   pinMode(mq5Pin, INPUT);
   pinMode(mq135Pin, INPUT);
-  pinMode(buzzerPin, OUTPUT);  // Set buzzer pin as output
+  pinMode(buzzerPin, OUTPUT); 
 }
 
 void loop() {
@@ -28,20 +28,20 @@ void loop() {
   if (mq5Val > mq5Threshold || mq135Val > mq135Threshold) {
     // Trigger buzzer for alert
     digitalWrite(buzzerPin, HIGH);
-    tone(buzzerPin, 1000);  // Play 1 kHz tone (adjust for desired frequency)
-    delay(1000);  // Buzz for 1 second (adjust duration as needed)
+    tone(buzzerPin, 1000);  
+    delay(1000);  
     digitalWrite(buzzerPin, LOW);  // Stop buzzer
-    noTone(buzzerPin);  // Ensure buzzer is completely off
+    noTone(buzzerPin); 
 
-    // Send spoilage notification to Python
+    // Send spoilage notification 
     bluetooth.println("Spoilage alert!");
   }
 
   // Transmit sensor readings and labels via Bluetooth (and to Serial Monitor)
-  Serial.print("MQ-5 (raw): ");  // Print to Serial Monitor
-  Serial.println(mq5Val);         // Print to Serial Monitor
-  Serial.print("MQ-135 (raw): "); // Print to Serial Monitor
-  Serial.println(mq135Val);       // Print to Serial Monitor
+  Serial.print("MQ-5 (raw): "); 
+  Serial.println(mq5Val);        
+  Serial.print("MQ-135 (raw): ");
+  Serial.println(mq135Val);      
 
-  delay(5000);  // Check sensors every 5 seconds (adjust as needed)
+  delay(5000);  
 }
