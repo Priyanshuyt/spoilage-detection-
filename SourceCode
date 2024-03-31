@@ -8,8 +8,8 @@ const int buzzerPin = 8;  // Pin for the buzzer
 // Define software serial pins for Bluetooth communication
 SoftwareSerial bluetooth(2, 3); // RX (2), TX (3)
 
-int mq5Threshold = 5000;
-int mq135Threshold = 4000;
+int mq5Threshold = 500;
+int mq135Threshold = 400;
 
 void setup() {
   Serial.begin(9600);  // Initialize Serial for debugging
